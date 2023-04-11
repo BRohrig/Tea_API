@@ -29,8 +29,47 @@ RSpec.describe 'customer endpoints' do
                                                 address: "1234 Bob Lane",
                                                 city: "Bobtown",
                                                 zip_code: 98203 }})
-
-   
   end
 
+  it 'has an endpoint to allow a customer to modify their information' do
+    customer = create(:customer)
+
+    update_params = { first_name: "A name",
+                      last_name: "another name",
+                      email: "thisisanemail@email.com4",
+                      address: "fake address",
+                      city: "FakeCity",
+                      zip_code: 000001 }
+    
+    expect(customer.first_name).to_not eq("A name")
+    expect(customer.last_name).to_not eq("another name")
+    expect(customer.email).to_not eq("thisisanemail@email.com4")
+    expect(customer.address).to_not eq("fake address")
+    expect(customer.city).to_not eq("FakeCity")
+    expect(customer.zip_code).to_not eq(000001)
+
+    patch api_v1_customer_path(customer.id), params: update_params
+
+    expect(response).to be_successful
+
+    customer_response = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(customer_response).to eq({ id: "#{customer.id}",
+                                      type: "customer",
+                                      attributes: { first_name: "A name",
+                                                    last_name: "another name",
+                                                    email: "thisisanemail@email.com4",
+                                                    address: "fake address",
+                                                    city: "FakeCity",
+                                                    zip_code: 000001 }})
+
+    updated_customer = Customer.find(customer.id)
+
+    expect(updated_customer.first_name).to eq("A name")
+    expect(updated_customer.last_name).to eq("another name")
+    expect(updated_customer.email).to eq("thisisanemail@email.com4")
+    expect(updated_customer.address).to eq("fake address")
+    expect(updated_customer.city).to eq("FakeCity")
+    expect(updated_customer.zip_code).to eq(000001)
+  end
 end
