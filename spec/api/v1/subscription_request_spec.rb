@@ -69,7 +69,7 @@ RSpec.describe 'subscription endpoints' do
 
       expect(response).to be_successful
 
-      inactive_subs = JSON.parse(response.body, symbolize_names: true)
+      inactive_subs = JSON.parse(response.body, symbolize_names: true)[:data]
 
       expect(inactive_subs.count).to eq(5)
       inactive_subs.each do |sub|
