@@ -28,4 +28,22 @@ RSpec.describe 'subscription endpoints' do
     expect(new_subscription.status).to eq("Active")
     expect(new_subscription.frequency).to eq("Monthly")
   end
+
+  it 'has an endpoint to display all of the subscriptions for a user' do
+    create_list(:subscription, 5, customer_id: @customer.id)
+
+    get api_v1_customer_subscriptions_path(@customer.id)
+
+    expect(response).to be_successful
+
+    subscriptions = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(subscriptions.count).to eq(5)
+    subscriptions.each do |subscription|
+      expect(subscription).to have_key(:nickname)
+      expect(subscription).to have_key(:price)
+      expect(subscription).to have_key(:status)
+      expect(subscription).to have_key(:frequency)
+    end
+  end
 end
