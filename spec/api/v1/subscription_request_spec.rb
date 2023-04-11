@@ -40,10 +40,10 @@ RSpec.describe 'subscription endpoints' do
 
     expect(subscriptions.count).to eq(5)
     subscriptions.each do |subscription|
-      expect(subscription).to have_key(:nickname)
-      expect(subscription).to have_key(:price)
-      expect(subscription).to have_key(:status)
-      expect(subscription).to have_key(:frequency)
+      expect(subscription[:attributes]).to have_key(:nickname)
+      expect(subscription[:attributes]).to have_key(:price)
+      expect(subscription[:attributes]).to have_key(:status)
+      expect(subscription[:attributes]).to have_key(:frequency)
     end
   end
 end
