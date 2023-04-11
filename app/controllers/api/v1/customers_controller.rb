@@ -9,6 +9,11 @@ class Api::V1::CustomersController < ApplicationController
     render json: CustomerSerializer.new(updated_customer)
   end
 
+  def destroy
+    Customer.find(params[:id]).delete
+    render json: "Customer Deleted Successfully"
+  end
+
   private
 
   def customer_data
