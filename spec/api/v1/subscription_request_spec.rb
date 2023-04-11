@@ -46,4 +46,19 @@ RSpec.describe 'subscription endpoints' do
       expect(subscription[:attributes]).to have_key(:frequency)
     end
   end
+
+  it 'has an endpoint to update the status and nickname of a subscription' do
+    subscription = create(:subscription, customer_id: @customer.id, status: "Active")
+
+    patch api_v1_customer_subscription_path(@customer.id, subscription.id), params: { nickname: "I hate this tea", status: "Inactive" }
+
+    expect(response).to be_successful
+
+    updated_sub = JSON.parse(response.body, symbolize_names: true)[:data]
+
+    expect(updated_sub[:attributes][:nickname]).to eq("I hate this tea")
+    expect(updated_sub[:attributes][:status]).to eq("Inactive")
+    expect(updated_sub[:attributes][:price]).to eq(subscription.price)
+    expect(updated_sub[:attributes][:frequency]).to eq(subscription.frequency)
+  end
 end

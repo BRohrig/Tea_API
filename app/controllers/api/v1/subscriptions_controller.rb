@@ -16,5 +16,4 @@ class Api::V1::SubscriptionsController < ApplicationController
                   :status,
                   :frequency)
   end
-
 end
