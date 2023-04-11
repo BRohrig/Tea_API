@@ -15,13 +15,13 @@ RSpec.describe 'subscription endpoints' do
 
     expect(response).to be_successful
 
-    subscription = JSON.parse(response.body, symbolize_names: true)[:data]
+    subscription = JSON.parse(response.body, symbolize_names: true)[:data][:attributes]
 
     expect(subscription[:nickname]).to eq("I love this tea!")
     expect(subscription[:price]).to eq(20)
     expect(subscription[:status]).to eq("Active")
     expect(subscription[:frequency]).to eq("Monthly")
-    @customer.subscriptions.last = new_subscription
+    new_subscription = @customer.subscriptions.last
 
     expect(new_subscription.nickname).to eq("I love this tea!")
     expect(new_subscription.price).to eq(20)
