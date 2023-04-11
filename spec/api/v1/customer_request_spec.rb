@@ -16,17 +16,21 @@ RSpec.describe 'customer endpoints' do
 
     customer_data = JSON.parse(response.body, symbolize_names: true)[:data]
 
-    expect(customer_data).to eq({ first_name: "Bob",
-                                  last_name: "Also Bob",
-                                  email: "BobbityBob@bob.com",
-                                  address: "1234 Bob Lane",
-                                  city: "Bobtown",
-                                  zip_code: "98203" })
-
     new_customer = Customer.last
     expect(new_customer.first_name).to eq("Bob")
     expect(new_customer.email).to eq("BobbityBob@bob.com")
     expect(new_customer.city).to eq("Bobtown")
+
+    expect(customer_data).to eq({ id: "#{new_customer.id}",
+                                  type: "customer",
+                                  attributes: { first_name: "Bob",
+                                                last_name: "Also Bob",
+                                                email: "BobbityBob@bob.com",
+                                                address: "1234 Bob Lane",
+                                                city: "Bobtown",
+                                                zip_code: 98203 }})
+
+   
   end
 
 end
