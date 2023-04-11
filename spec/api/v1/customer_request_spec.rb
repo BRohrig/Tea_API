@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe 'customer endpoints' do
+  before(:all) do
+    Customer.delete_all
+  end
+  
   it 'has an endpoint to create a new customer' do
     new_customer_input = {  first_name: "Bob",
                             last_name: "Also Bob",
