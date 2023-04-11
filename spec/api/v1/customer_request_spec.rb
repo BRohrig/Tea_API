@@ -73,4 +73,15 @@ RSpec.describe 'customer endpoints' do
     expect(updated_customer.city).to eq("FakeCity")
     expect(updated_customer.zip_code).to eq(000001)
   end
+
+  it 'has an endpoint to delete a customer' do
+    customer = create(:customer)
+
+    delete api_v1_customer_path(customer.id)
+
+    expect(response).to be_successful
+
+    expect(response.body).to eq("Customer Deleted Successfully")
+    expect { Customer.find(customer.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
 end
