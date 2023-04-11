@@ -4,6 +4,11 @@ class Api::V1::CustomersController < ApplicationController
     render json: CustomerSerializer.new(new_customer)
   end
 
+  def update
+    updated_customer = Customer.update(customer_data)
+    render json: CustomerSerializer.new(updated_customer)
+  end
+
   private
 
   def customer_data
@@ -15,5 +20,4 @@ class Api::V1::CustomersController < ApplicationController
                   :zip_code, 
                   :password)
   end
-
 end
