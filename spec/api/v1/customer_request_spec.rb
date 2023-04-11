@@ -39,7 +39,8 @@ RSpec.describe 'customer endpoints' do
                       email: "thisisanemail@email.com4",
                       address: "fake address",
                       city: "FakeCity",
-                      zip_code: 000001 }
+                      zip_code: 000001,
+                      password: "password" }
     
     expect(customer.first_name).to_not eq("A name")
     expect(customer.last_name).to_not eq("another name")
@@ -54,14 +55,14 @@ RSpec.describe 'customer endpoints' do
 
     customer_response = JSON.parse(response.body, symbolize_names: true)[:data]
 
-    expect(customer_response).to eq({ id: "#{customer.id}",
+    expect(customer_response).to eq([{ id: "#{customer.id}",
                                       type: "customer",
                                       attributes: { first_name: "A name",
                                                     last_name: "another name",
                                                     email: "thisisanemail@email.com4",
                                                     address: "fake address",
                                                     city: "FakeCity",
-                                                    zip_code: 000001 }})
+                                                    zip_code: 000001 }}])
 
     updated_customer = Customer.find(customer.id)
 
