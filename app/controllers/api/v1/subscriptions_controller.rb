@@ -21,7 +21,8 @@ class Api::V1::SubscriptionsController < ApplicationController
     params.permit(:nickname,
                   :price, 
                   :status,
-                  :frequency)
+                  :frequency,
+                  :tea_id)
   end
 
   def update_params
