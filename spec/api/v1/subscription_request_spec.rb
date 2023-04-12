@@ -31,6 +31,22 @@ RSpec.describe 'subscription endpoints' do
       expect(new_subscription.status).to eq("Active")
       expect(new_subscription.frequency).to eq("Monthly")
     end
+
+    it 'returns the appropriate 422 error when a subscription cannot be created' do
+      subscription_data = { nickname: "this is a tea",
+                            price: "1" }
+
+      post api_v1_customer_subscriptions_path(@customer.id), params: subscription_data
+      
+      expect(response).to be_successful
+
+      expect(response.status).to eq(422)
+
+      error = JSON.parse(response.body, symbolize_names: true)
+
+      expect(error).to eq({ errors: "Unprocessable entity"})
+
+    end
   end
 
   describe 'subscription index endpoint' do
