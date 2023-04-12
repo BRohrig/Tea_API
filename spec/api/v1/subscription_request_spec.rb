@@ -38,13 +38,13 @@ RSpec.describe 'subscription endpoints' do
 
       post api_v1_customer_subscriptions_path(@customer.id), params: subscription_data
       
-      expect(response).to be_successful
+      expect(response).to_not be_successful
 
       expect(response.status).to eq(422)
 
       error = JSON.parse(response.body, symbolize_names: true)
 
-      expect(error).to eq({ errors: "Unprocessable entity"})
+      expect(error).to eq({ :error=>{:frequency=>["can't be blank"], :status=>["can't be blank"], :tea=>["must exist"]}})
 
     end
   end
