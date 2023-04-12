@@ -3,6 +3,7 @@ require 'rails_helper'
 RSpec.describe 'subscription endpoints' do
   before(:all) do
     @customer = create(:customer)
+    @tea = create(:tea)
   end
 
   describe 'subscription creation endpoint' do
@@ -10,7 +11,8 @@ RSpec.describe 'subscription endpoints' do
       subscription_data = { nickname: "I love this tea!",
                             price: 20,
                             status: "Active",
-                            frequency: "Monthly"}
+                            frequency: "Monthly",
+                            tea_id: @tea.id }
 
       post api_v1_customer_subscriptions_path(@customer.id), params: subscription_data
 
@@ -33,7 +35,7 @@ RSpec.describe 'subscription endpoints' do
 
   describe 'subscription index endpoint' do
     it 'has an endpoint to display all of the subscriptions for a user' do
-      create_list(:subscription, 5, customer_id: @customer.id)
+      create_list(:subscription, 5, customer_id: @customer.id, tea_id: @tea.id)
 
       get api_v1_customer_subscriptions_path(@customer.id)
 
@@ -51,8 +53,8 @@ RSpec.describe 'subscription endpoints' do
     end
 
     it 'accepts a parameter to filter by status' do
-      create_list(:subscription, 3, customer_id: @customer.id, status: "Active")
-      create_list(:subscription, 5, customer_id: @customer.id, status: "Inactive")
+      create_list(:subscription, 3, customer_id: @customer.id, tea_id: @tea.id, status: "Active")
+      create_list(:subscription, 5, customer_id: @customer.id, tea_id: @tea.id, status: "Inactive")
 
       get api_v1_customer_subscriptions_path(@customer.id), params: { status: "Active" }
 
@@ -80,7 +82,7 @@ RSpec.describe 'subscription endpoints' do
 
   describe 'subscription update endpoint' do
     it 'has an endpoint to update the status and nickname of a subscription' do
-      subscription = create(:subscription, customer_id: @customer.id, status: "Active")
+      subscription = create(:subscription, customer_id: @customer.id, tea_id: @tea.id, status: "Active")
 
       patch api_v1_customer_subscription_path(@customer.id, subscription.id), params: { nickname: "I hate this tea", status: "Inactive" }
 
