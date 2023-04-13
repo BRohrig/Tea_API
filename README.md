@@ -35,7 +35,7 @@ All endpoints return a JSON object.
 POST /api/v1/customers
 
 Request Body is a JSON object in the following format:
-
+```
 {
 "first_name": <string>,
 "last_name": <string>,
@@ -45,9 +45,9 @@ Request Body is a JSON object in the following format:
 "zip_code": <integer>,
 "password": <string>
 }
-
+```
 Response:
-
+```
 {
     "data": {
         "id": "1",
@@ -62,11 +62,11 @@ Response:
         }
     }
 }
-
+```
 Please note that Password is encrypted server side and not returned in the response.
 
 Also note that if an email has already been used, the following response will be received:
-
+```
 {
     "error": {
         "email": [
@@ -74,7 +74,7 @@ Also note that if an email has already been used, the following response will be
         ]
     }
 }
-
+```
 ### Customer Deletion
 
 DELETE /api/v1/customers/:customer_id
@@ -82,15 +82,15 @@ DELETE /api/v1/customers/:customer_id
 Request has no body or parameters other than customer_id
 
 Response: 
-
+```
 Customer Deleted Successfully
-
+```
 ### Customer Updating
 
 PATCH /api/v1/customers/:customer_id
 
 Request Body is a JSON object which includes any combination of the following Key/value pairs
-
+```
 {
 "first_name": <string>,
 "last_name": <string>,
@@ -100,9 +100,9 @@ Request Body is a JSON object which includes any combination of the following Ke
 "zip_code": <integer>,
 "password": <string>
 }
-
+```
 Response:
-
+```
 {
     "data": {
         "id": "1",
@@ -117,21 +117,21 @@ Response:
         }
     }
 }
-
+```
 ### Invalid Customer
 
 If a patch or delete request is sent to an invalid customer ID, the response will be status 404, and the response body will be:
-
+```
 {
   "error": "Couldn't find Customer with 'id'=<request_id>"
 }
-
+```
 ### Subscription Creation
 
 POST /api/v1/customers/:customer_id/subscriptions
 
 Request Body is a JSON object in the following format:
-
+```
 {
     "nickname": <string>, <OPTIONAL>
     "price": <float>,
@@ -139,9 +139,9 @@ Request Body is a JSON object in the following format:
     "frequency": <string>,
     "tea_id": <valid_tea_id>
 }
-
+```
 Response:
-
+```
 {
     "data": {
         "id": <id>,
@@ -154,11 +154,11 @@ Response:
         }
     }
 }
-
+```
 NOTE:
 
 If an invalid <tea_id> is sent, the response body will be as follows:
-
+```
 {
     "error": {
         "tea": [
@@ -166,3 +166,4 @@ If an invalid <tea_id> is sent, the response body will be as follows:
         ]
     }
 }
+```
