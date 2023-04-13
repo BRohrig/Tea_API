@@ -18,7 +18,7 @@
 
 ### Schema
 <div align="center">
-  <img src="https://github.com/BRohrig/Tea_API/blob/main/Screen%20Shot%202023-04-12%20at%205.23.07%20PM.png"
+  <img src="https://github.com/BRohrig/Tea_API/blob/main/Screen%20Shot%202023-04-13%20at%208.59.10%20AM.png"
   alt="Profile" width="1280">
 </div>
 
