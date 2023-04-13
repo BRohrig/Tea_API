@@ -167,3 +167,61 @@ If an invalid <tea_id> is sent, the response body will be as follows:
     }
 }
 ```
+### Subscription Updating
+
+PATCH /api/v1/customers/:customer_id/subscriptions/:subscription_id
+
+Request Body accepts only the following two parameters:
+```
+{
+  "nickname": <new_nickname>,
+  "status": <new_status>
+}
+```
+Response:
+```
+{
+    "data": {
+        "id": <id>,
+        "type": "subscription",
+        "attributes": {
+            "nickname": <new_nickname>,
+            "price": <price_>,
+            "status": <new_status>,
+            "frequency": <frequency>
+        }
+    }
+}
+```
+### Subscription Index
+
+GET /api/v1/customers/:customer_id/subscriptions
+
+NOTE: This endpoint accepts an optional query parameter of `?status=<status>` which allows the user to only get subscriptions which match the status requested.
+
+Response:
+```
+{
+    "data": [
+        {
+            "id": "1",
+            "type": "subscription",
+            "attributes": {
+                "nickname": <nickname OR null>,
+                "price": <price>,
+                "status": <status OR match query param>,
+                "frequency": <frequency>
+            }
+        },
+        {
+            "id": "2",
+            "type": "subscription",
+            "attributes": {
+                "nickname": <nickname OR null>,
+                "price": <price>,
+                "status": <status OR match query param>,
+                "frequency": <frequency>
+            }
+        }....
+    ]
+}
