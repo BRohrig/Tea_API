@@ -1,28 +1,34 @@
-class Api::V1::CustomersController < ApplicationController
-  def create
-    new_customer = Customer.create(customer_data)
-    render json: CustomerSerializer.new(new_customer)
-  end
+# frozen_string_literal: true
 
-  def update
-    updated_customer = Customer.update(customer_data)
-    render json: CustomerSerializer.new(updated_customer)
-  end
+module Api
+  module V1
+    class CustomersController < ApplicationController
+      def create
+        new_customer = Customer.create(customer_data)
+        render json: CustomerSerializer.new(new_customer)
+      end
 
-  def destroy
-    Customer.find(params[:id]).delete
-    render json: "Customer Deleted Successfully"
-  end
+      def update
+        updated_customer = Customer.update(customer_data)
+        render json: CustomerSerializer.new(updated_customer)
+      end
 
-  private
+      def destroy
+        Customer.find(params[:id]).delete
+        render json: 'Customer Deleted Successfully'
+      end
 
-  def customer_data
-    params.permit(:first_name, 
-                  :last_name, 
-                  :address, 
-                  :email, 
-                  :city, 
-                  :zip_code, 
-                  :password)
+      private
+
+      def customer_data
+        params.permit(:first_name,
+                      :last_name,
+                      :address,
+                      :email,
+                      :city,
+                      :zip_code,
+                      :password)
+      end
+    end
   end
 end

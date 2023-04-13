@@ -1,11 +1,11 @@
+# frozen_string_literal: true
+
 class CustomerSerializer
   include JSONAPI::Serializer
-  attributes  :first_name, 
-              :last_name, 
-              :address, 
+  attributes  :first_name,
+              :last_name,
+              :address,
               :city,
-              :email, 
+              :email,
               :zip_code
-
-
 end
