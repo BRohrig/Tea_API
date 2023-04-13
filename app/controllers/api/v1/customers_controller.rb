@@ -4,13 +4,14 @@ module Api
   module V1
     class CustomersController < ApplicationController
       def create
-        new_customer = Customer.create(customer_data)
+        new_customer = Customer.create!(customer_data)
         render json: CustomerSerializer.new(new_customer)
       end
 
       def update
-        updated_customer = Customer.update(customer_data)
-        render json: CustomerSerializer.new(updated_customer)
+        customer = Customer.find(params[:id])
+        customer.update(customer_data)
+        render json: CustomerSerializer.new(customer)
       end
 
       def destroy

@@ -61,14 +61,14 @@ RSpec.describe 'customer endpoints' do
 
     customer_response = JSON.parse(response.body, symbolize_names: true)[:data]
 
-    expect(customer_response).to eq([{ id: customer.id.to_s,
+    expect(customer_response).to eq({ id: customer.id.to_s,
                                        type: 'customer',
                                        attributes: { first_name: 'A name',
                                                      last_name: 'another name',
                                                      email: 'thisisanemail@email.com4',
                                                      address: 'fake address',
                                                      city: 'FakeCity',
-                                                     zip_code: 0o00001 } }])
+                                                     zip_code: 0o00001 } })
 
     updated_customer = Customer.find(customer.id)
 
@@ -89,5 +89,16 @@ RSpec.describe 'customer endpoints' do
 
     expect(response.body).to eq('Customer Deleted Successfully')
     expect { Customer.find(customer.id) }.to raise_error(ActiveRecord::RecordNotFound)
+  end
+
+  it 'returns an appropriate 404 error when an attempt to update a nonexistent record is sent' do
+    patch api_v1_customer_path("this is not an ID")
+
+    expect(response).to_not be_successful
+
+    expect(response.status).to eq(404)
+
+    error = JSON.parse(response.body, symbolize_names: true)
+    expect(error).to eq({ error: "Couldn't find Customer with 'id'=this is not an ID" })
   end
 end
