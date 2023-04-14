@@ -14,7 +14,7 @@
 
 * After cloning this repo locally, run `bundle install`
 
-* Then create the PostgreSQL database with `rails db:{create,migrate}`
+* Then create the PostgreSQL database with `rails db:{create,migrate,seed}`
 
 ### Schema
 <div align="center">
